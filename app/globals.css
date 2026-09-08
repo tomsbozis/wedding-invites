@@ -38,7 +38,17 @@ body {
   perspective: 900px;
 }
 
-/* Kartīte */
+/* Fons — tikai vizuāla ēna/pamatne */
+.envelope__back {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: #d8cca8;
+  border-radius: 4px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Kartīte — vidus slānis */
 .envelope__card {
   position: absolute;
   left: 14px;
@@ -56,45 +66,58 @@ body {
   padding: 12px;
   z-index: 1;
   transform: translateY(0);
-}
-
-/* Izlien no aploksnes un paliek redzama, nekustīga */
-.envelope--opening .envelope__card,
-.envelope--open .envelope__card {
-  transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1) 0.3s;
-  transform: translateY(-235px);
-}
-
-/* Leaving fāzē turpina lidot tālu uz augšu un pazūd no ekrāna */
-.envelope--leaving .envelope__card {
-  transition: transform 1s cubic-bezier(0.4, 0, 1, 1);
-  transform: translateY(-580px);
-}
-
-/* Čaula — kabata + vāciņš, kas krīt lejā kopā leaving fāzē */
-.envelope__shell {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  transform: translateY(0);
-  opacity: 1;
-}
-
-.envelope--leaving .envelope__shell {
-  transition: transform 1s ease-in 0.1s, opacity 0.5s ease 0.6s;
-  transform: translateY(400px);
   opacity: 0;
 }
 
-.envelope__pocket {
-  position: absolute;
-  inset: 0;
-  background: #ece0c9;
-  border-radius: 4px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+.envelope--opening .envelope__card,
+.envelope--open .envelope__card {
+  transition: transform 2.1s cubic-bezier(0.22, 1, 0.36, 1) 0.2s,    opacity 0.3s ease 0.2s;
+  transform: translateY(-235px);
+  opacity: 1;
+  -webkit-transition: transform 2.1s cubic-bezier(0.22, 1, 0.36, 1) 0.2s,    opacity 0.3s ease 0.2s;
+  -moz-transition: transform 2.1s cubic-bezier(0.22, 1, 0.36, 1) 0.2s,    opacity 0.3s ease 0.2s;
+  -ms-transition: transform 2.1s cubic-bezier(0.22, 1, 0.36, 1) 0.2s,    opacity 0.3s ease 0.2s;
+  -o-transition: transform 2.1s cubic-bezier(0.22, 1, 0.36, 1) 0.2s,    opacity 0.3s ease 0.2s;
 }
 
-/* Vāciņš — atveras un PALIEK atvērts (backface-visibility noņemts, lai nepazūd) */
+.envelope--leaving .envelope__card {
+  transition: transform 2s cubic-bezier(0.4, 0, 1, 1);
+  transform: translateY(-580px);
+  opacity: 1;
+  -webkit-transform: translateY(-580px);
+  -moz-transform: translateY(-580px);
+  -ms-transform: translateY(-580px);
+  -o-transform: translateY(-580px);
+  -webkit-transition: transform 2s cubic-bezier(0.4, 0, 1, 1);
+  -moz-transition: transform 2s cubic-bezier(0.4, 0, 1, 1);
+  -ms-transition: transform 2s cubic-bezier(0.4, 0, 1, 1);
+  -o-transition: transform 2s cubic-bezier(0.4, 0, 1, 1);
+}
+
+/* Aploksnes korpusa trijstūri — VIENMĒR virs kartītes, nekustas */
+.envelope__flap-left {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-bottom: 190px solid #c9b791;
+  border-right: 140px solid transparent;
+  z-index: 2;
+}
+
+.envelope__flap-right {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-bottom: 190px solid #c9b791;
+  border-left: 140px solid transparent;
+  z-index: 2;
+}
+
+/* Vāciņš — aizvērtā stāvoklī VIRS visa, atvērtā stāvoklī ZEM kartītes */
 .envelope__flap-top {
   position: absolute;
   top: 0;
@@ -103,16 +126,26 @@ body {
   height: 0;
   border-left: 140px solid transparent;
   border-right: 140px solid transparent;
-  border-top: 100px solid #ddccaa;
+  border-top: 100px solid #bfa878;
+  z-index: 5;
   transform-origin: top center;
   transform-style: preserve-3d;
-  transition: transform 0.7s ease;
+  transition: transform 0.7s ease, z-index 0s;
+  -webkit-transition: transform 0.7s ease, z-index 0s;
+  -moz-transition: transform 0.7s ease, z-index 0s;
+  -ms-transition: transform 0.7s ease, z-index 0s;
+  -o-transition: transform 0.7s ease, z-index 0s;
 }
 
 .envelope--opening .envelope__flap-top,
 .envelope--open .envelope__flap-top,
 .envelope--leaving .envelope__flap-top {
   transform: rotateX(-110deg);
+  z-index: 0;
+  -webkit-transform: rotateX(-110deg);
+  -moz-transform: rotateX(-110deg);
+  -ms-transform: rotateX(-110deg);
+  -o-transform: rotateX(-110deg);
 }
 
 .envelope__seal {
@@ -131,11 +164,41 @@ body {
   font-family: var(--font-playfair), serif;
   font-size: 18px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-  transition: opacity 0.4s ease;
+  transition: opacity 0.3s ease;
+  -webkit-transition: opacity 0.3s ease;
+  -moz-transition: opacity 0.3s ease;
+  -ms-transition: opacity 0.3s ease;
+  -o-transition: opacity 0.3s ease;
 }
 
 .envelope--opening .envelope__seal,
 .envelope--open .envelope__seal,
 .envelope--leaving .envelope__seal {
   opacity: 0;
+}
+
+/* Leaving fāzē — tukšā aploksne (korpuss + vāciņš) krīt lejā un izgaist */
+.envelope--leaving .envelope__back,
+.envelope--leaving .envelope__flap-left,
+.envelope--leaving .envelope__flap-right,
+.envelope--leaving .envelope__flap-top {
+  transition: transform 1s ease-in 0.1s, opacity 0.5s ease 0.6s;
+  transform: translateY(400px);
+  opacity: 0;
+  -webkit-transition: transform 1s ease-in 0.1s, opacity 0.5s ease 0.6s;
+  -moz-transition: transform 1s ease-in 0.1s, opacity 0.5s ease 0.6s;
+  -ms-transition: transform 1s ease-in 0.1s, opacity 0.5s ease 0.6s;
+  -o-transition: transform 1s ease-in 0.1s, opacity 0.5s ease 0.6s;
+  -webkit-transform: translateY(400px);
+  -moz-transform: translateY(400px);
+  -ms-transform: translateY(400px);
+  -o-transform: translateY(400px);
+}
+
+.envelope--leaving .envelope__flap-top {
+  transform: translateY(400px) rotateX(-110deg);
+  -webkit-transform: translateY(400px) rotateX(-110deg);
+  -moz-transform: translateY(400px) rotateX(-110deg);
+  -ms-transform: translateY(400px) rotateX(-110deg);
+  -o-transform: translateY(400px) rotateX(-110deg);
 }

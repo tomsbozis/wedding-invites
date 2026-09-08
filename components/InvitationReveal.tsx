@@ -86,7 +86,9 @@ export default function InvitationReveal({
             onClick={stage === "closed" ? handleOpen : undefined}
             className={`envelope envelope--${stage}`}
           >
-            {/* Kartīte — lido uz augšu un ārā */}
+            <div className="envelope__back" />
+
+            {/* Kartīte — vidū */}
             <div className="envelope__card">
               <p className="font-heading text-xs uppercase tracking-widest text-neutral-400 mb-2">
                 Mūsu kāzas
@@ -99,13 +101,14 @@ export default function InvitationReveal({
               </p>
             </div>
 
-            {/* Čaula (kabata + vāciņš) — krīt uz leju kopā */}
-            <div className="envelope__shell">
-              <div className="envelope__pocket" />
-              <div className="envelope__flap-top">
-                <div className="envelope__seal">
-                  {invitation.couple_names?.[0] ?? "♥"}
-                </div>
+            {/* Aploksnes korpuss — vienmēr virs kartītes, nekustas */}
+            <div className="envelope__flap-left" />
+            <div className="envelope__flap-right" />
+
+            {/* Vāciņš — aizvērts virs visa, atvērts nokrīt zem kartītes */}
+            <div className="envelope__flap-top">
+              <div className="envelope__seal">
+                {invitation.couple_names?.[0] ?? "♥"}
               </div>
             </div>
           </div>
