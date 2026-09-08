@@ -106,7 +106,7 @@ export default function InvitationReveal({
 
             <div className="envelope__flap-top">
               <div className="envelope__seal">
-                {invitation.couple_names?.[0] ?? "♥"}
+                {invitation.new_surname?.[0] ?? "♥"}
               </div>
             </div>
           </div>
