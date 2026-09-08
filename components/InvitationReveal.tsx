@@ -49,6 +49,16 @@ export default function InvitationReveal({
           </p>
         </div>
 
+        <img
+            src="https://shootdotedit.com/images/blog/Erin-Morrison-Photography-0076-_erinm_photography-1.jpg"
+            alt="couple"
+            className="w-150 h-150"
+        />
+        <div className="text-center mb-8">
+            <p className="text-xl text-neutral-600 leading-relaxed italic">
+            </p>
+          </div>
+
         {invitation.invitation_text && (
           <div className="text-center mb-8">
             <p className="text-xl text-neutral-600 leading-relaxed italic">
@@ -58,6 +68,13 @@ export default function InvitationReveal({
         )}
 
         {invitation.audio_url && <SongPlayer audioUrl={invitation.audio_url} />}
+
+
+          <div className="text-center mb-2">
+            <p className="text-xl text-neutral-800 leading-relaxed ">
+                Līdz lielajam notikumam vēl tikai
+            </p>
+          </div>
 
         <Countdown targetDate={countdownTarget} />
 
