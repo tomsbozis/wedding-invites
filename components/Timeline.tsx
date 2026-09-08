@@ -19,7 +19,7 @@ export default function Timeline({ locations }: { locations: Location[] }) {
             {/* Augšējā rinda: gredzenu bilde + laiks + adrese */}
             <div className="flex items-center gap-3">
               <img
-                src="/images/rings.png"
+                src="/images/rings.webp"
                 alt=""
                 className="w-10 h-10 object-contain flex-shrink-0"
               />
