@@ -11,30 +11,43 @@ body {
   font-family: var(--font-playfair), serif;
 }
 
+.envelope-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: #faf7f2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
+  opacity: 1;
+  transition: opacity 1s ease 0.5s;
+}
+
+.envelope-overlay--leaving {
+  opacity: 0;
+  pointer-events: none;
+}
+
 .envelope {
   position: relative;
   width: 280px;
   height: 190px;
   cursor: pointer;
+  perspective: 900px;
 }
 
-.envelope__back {
-  position: absolute;
-  inset: 0;
-  background: #f5f1ea;
-  border-radius: 4px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-}
-
+/* Kartīte */
 .envelope__card {
   position: absolute;
-  left: 10px;
-  right: 10px;
-  top: 14px;
-  height: 160px;
+  left: 14px;
+  right: 14px;
+  top: 10px;
+  height: 165px;
   background: white;
   border-radius: 2px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -42,13 +55,46 @@ body {
   text-align: center;
   padding: 12px;
   z-index: 1;
-  transition: transform 1s ease 0.5s;
+  transform: translateY(0);
 }
 
-.envelope--opening .envelope__card {
-  transform: translateY(-130px) scale(1.05);
+/* Izlien no aploksnes un paliek redzama, nekustīga */
+.envelope--opening .envelope__card,
+.envelope--open .envelope__card {
+  transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1) 0.3s;
+  transform: translateY(-235px);
 }
 
+/* Leaving fāzē turpina lidot tālu uz augšu un pazūd no ekrāna */
+.envelope--leaving .envelope__card {
+  transition: transform 1s cubic-bezier(0.4, 0, 1, 1);
+  transform: translateY(-580px);
+}
+
+/* Čaula — kabata + vāciņš, kas krīt lejā kopā leaving fāzē */
+.envelope__shell {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.envelope--leaving .envelope__shell {
+  transition: transform 1s ease-in 0.1s, opacity 0.5s ease 0.6s;
+  transform: translateY(400px);
+  opacity: 0;
+}
+
+.envelope__pocket {
+  position: absolute;
+  inset: 0;
+  background: #ece0c9;
+  border-radius: 4px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+}
+
+/* Vāciņš — atveras un PALIEK atvērts (backface-visibility noņemts, lai nepazūd) */
 .envelope__flap-top {
   position: absolute;
   top: 0;
@@ -57,58 +103,25 @@ body {
   height: 0;
   border-left: 140px solid transparent;
   border-right: 140px solid transparent;
-  border-top: 95px solid #e8dfd0;
-  z-index: 3;
+  border-top: 100px solid #ddccaa;
   transform-origin: top center;
+  transform-style: preserve-3d;
   transition: transform 0.7s ease;
 }
 
-.envelope--opening .envelope__flap-top {
-  transform: rotateX(180deg);
-  z-index: 0;
-}
-
-.envelope__flap-left {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 0;
-  border-bottom: 190px solid #ece3d4;
-  border-right: 140px solid transparent;
-  z-index: 2;
-}
-
-.envelope__flap-right {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 0;
-  height: 0;
-  border-bottom: 190px solid #ece3d4;
-  border-left: 140px solid transparent;
-  z-index: 2;
-}
-
-.envelope__flap-bottom {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 0;
-  border-left: 140px solid transparent;
-  border-right: 140px solid transparent;
-  border-bottom: 70px solid #f0e8da;
-  z-index: 2;
+.envelope--opening .envelope__flap-top,
+.envelope--open .envelope__flap-top,
+.envelope--leaving .envelope__flap-top {
+  transform: rotateX(-110deg);
 }
 
 .envelope__seal {
   position: absolute;
-  top: 78px;
+  top: -70px;
   left: 50%;
   transform: translateX(-50%);
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
   background: #a8382f;
   color: white;
   border-radius: 50%;
@@ -118,25 +131,11 @@ body {
   font-family: var(--font-playfair), serif;
   font-size: 18px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-  z-index: 4;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.4s ease;
 }
 
-.envelope--opening .envelope__seal {
+.envelope--opening .envelope__seal,
+.envelope--open .envelope__seal,
+.envelope--leaving .envelope__seal {
   opacity: 0;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fadeIn {
-  animation: fadeIn 0.6s ease-out;
 }
