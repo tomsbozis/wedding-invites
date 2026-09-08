@@ -24,6 +24,7 @@ export default function InvitationReveal({
   countdownTarget: string;
 }) {
   const [stage, setStage] = useState<Stage>("closed");
+  const headingLabel = invitation.new_surname || "Mūsu kāzas";
 
   function handleOpen() {
     setStage("opening");
@@ -40,7 +41,7 @@ export default function InvitationReveal({
       <div className="max-w-md mx-auto py-10 px-4 relative z-10">
         <div className="text-center mb-6">
           <p className="font-heading text-sm uppercase tracking-widest text-neutral-400 mb-3">
-            Mūsu kāzas
+            {headingLabel}
           </p>
           <h1 className="font-heading text-6xl mb-2">{invitation.couple_names}</h1>
           <p className="text-xl text-neutral-500">
@@ -88,10 +89,9 @@ export default function InvitationReveal({
           >
             <div className="envelope__back" />
 
-            {/* Kartīte — vidū */}
             <div className="envelope__card">
               <p className="font-heading text-xs uppercase tracking-widest text-neutral-400 mb-2">
-                Mūsu kāzas
+                {headingLabel}
               </p>
               <h1 className="font-heading text-3xl mb-1 leading-tight">
                 {invitation.couple_names}
@@ -101,11 +101,9 @@ export default function InvitationReveal({
               </p>
             </div>
 
-            {/* Aploksnes korpuss — vienmēr virs kartītes, nekustas */}
             <div className="envelope__flap-left" />
             <div className="envelope__flap-right" />
 
-            {/* Vāciņš — aizvērts virs visa, atvērts nokrīt zem kartītes */}
             <div className="envelope__flap-top">
               <div className="envelope__seal">
                 {invitation.couple_names?.[0] ?? "♥"}
