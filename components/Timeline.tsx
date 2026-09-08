@@ -18,11 +18,44 @@ export default function Timeline({ locations }: { locations: Location[] }) {
           <div key={loc.id} className="text-left">
             {/* Augšējā rinda: gredzenu bilde + laiks + adrese */}
             <div className="flex items-center gap-3">
-              <img
-                src="/images/rings.webp"
-                alt=""
-                className="w-10 h-10 object-contain flex-shrink-0"
-              />
+              <div className="w-10 h-10">
+                <svg
+                  viewBox="0 0 100 100"
+                  className="w-full h-full"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <defs>
+                    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#fff1a8" />
+                      <stop offset="35%" stopColor="#d4a72c" />
+                      <stop offset="70%" stopColor="#f5d76e" />
+                      <stop offset="100%" stopColor="#b8860b" />
+                    </linearGradient>
+                  </defs>
+
+                  {/* Kreisais gredzens */}
+                  <ellipse
+                    cx="42"
+                    cy="58"
+                    rx="27"
+                    ry="17"
+                    fill="none"
+                    stroke="url(#gold)"
+                    strokeWidth="9"
+                  />
+
+                  {/* Labais gredzens */}
+                  <ellipse
+                    cx="58"
+                    cy="42"
+                    rx="27"
+                    ry="17"
+                    fill="none"
+                    stroke="url(#gold)"
+                    strokeWidth="9"
+                  />
+                </svg>
+              </div>
 
               {loc.time && (
                 <p className="font-medium text-2xl">{loc.time}</p>
